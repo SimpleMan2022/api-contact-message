@@ -5,6 +5,9 @@ import morgan from "morgan"
 import cors from "cors"
 import { WebSocket, WebSocketServer } from "ws"
 import { authRoute } from "./route/auth"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const app = express()
 app.use(cors())
