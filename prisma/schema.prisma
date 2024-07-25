@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl= env("DIRECT_URL")
+}
+
+model Message {
+  id        Int   @id @default(autoincrement())
+  username  String
+  avatar    String
+  content   String
+  likes     Int     @default(0)
+  createdAt DateTime @default(now())
+  replies   MessageReply?
+
+  @@map("messages")
+}
+
+model MessageReply {
+  id        Int   @id @default(autoincrement())
+  content   String
+  messageId Int  @unique
+  message   Message  @relation(fields: [messageId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@map("message_replies")
+}
