@@ -2,13 +2,13 @@ import express from "express"
 import rateLimit from "express-rate-limit"
 import { MessageHandler } from "../handler/message-handler"
 import { verifyToken } from "../middleware/jwt-middleware"
-
+import { Request, Response, NextFunction } from "express"
 export const messageRoute = express.Router()
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 menit
   limit: 10,
-  handler: (req, res, next, options) => {
+  handler: (req: Request, res: Response, nex: NextFunction, options) => {
     res.status(429).json({
       status: "failed",
       message: "Jangan banyak banyak kirim pesannya bang!",

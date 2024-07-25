@@ -1,4 +1,4 @@
-import express from "express"
+import express, { NextFunction, Request, Response } from "express"
 import { messageRoute } from "./route/message-route"
 import { errorMiddleware } from "./middleware/error-middleware"
 import morgan from "morgan"
@@ -9,7 +9,7 @@ import { authRoute } from "./route/auth"
 const app = express()
 app.use(cors())
 
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Content-Security-Policy", "default-src 'self'")
   next()
 })
